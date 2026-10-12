@@ -1,4 +1,5 @@
 import streamlit as st
+import time
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -20,12 +21,13 @@ st.set_page_config(page_title="8 Courses, 1 Platform", layout="wide")
 with st.sidebar:
     st.image("https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg", width=50)
     st.image("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png", width=120)
+    st.markdown("**Project:** 8 Courses, 1 Platform")
+    st.markdown("**Powered by:** Google Gemini 3.8 Flash")
+    st.markdown("---")
     st.markdown("### 👨‍💻 Created by")
     st.markdown("**Rex Melvin Villaruel**") 
     st.markdown("Software QA Automation Engineer")
-    st.markdown("---")
-    st.markdown("**Project:** 8 Courses, 1 Platform")
-    st.markdown("**Powered by:** Google Gemini 3.8 Flash")
+    
     
 st.title("8 Courses, 1 Platform: A Google AI Professional Portfolio")
 
@@ -195,7 +197,64 @@ with tab2:
                         )
                         st.markdown(response.text)
                     except Exception as e:
-                      
-                        st.error("We're experiencing high traffic with the AI server right now. Please try again in a few moments.")
+                    # Error Handling
+                       # st.error(f"API Error Details: {e}")
+                        st.warning("We're experiencing high traffic with the AI server right now. Please try again in a few moments.")
         else:
                 st.warning("Please enter a question first.")
+
+
+# Phase 4: Tab 3 - Wellness Guardrails
+with tab3:
+    st.header("🧘‍♂️ Wellness Guardrails")
+    st.write("AI-powered burnout prevention and work-life balance advice tailored for working professionals.")
+    st.divider()
+
+    # Interactive Inputs para sa assessment
+    col1, col2 = st.columns(2)
+    with col1:
+        hours_worked = st.slider("Hours spent working today:", min_value=0, max_value=16, value=8)
+    with col2:
+        stress_level = st.select_slider("Current Stress Level:", options=["Chill", "Manageable", "High", "Burnout Risk"])
+
+    focus_area = st.multiselect(
+        "Any specific physical/mental strain?", 
+        ["Eye Strain", "Back/Neck Pain", "Mental Fatigue", "Sleepiness", "Headache"],
+        default=["Eye Strain"]
+    )
+
+    if st.button("Generate Wellness Routine"):
+        with st.spinner("Consulting your AI Wellness Coach..."):
+            
+            prompt = f"""
+            Act as an occupational health coach for software engineers.
+            Hours worked: {hours_worked}. Stress level: '{stress_level}'. 
+            Strain: {', '.join(focus_area)}.
+            
+            Provide EXACTLY 3 extremely short, actionable bullet points for immediate recovery.
+            Rule 1: No introductions.
+            Rule 2: No conclusions.
+            Rule 3: Maximum of 50 words total.
+            """
+            
+            # Auto-Retry Logic (Maximum 3 attempts)
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    response_stream = client.models.generate_content_stream(
+                        model='gemini-3.8-flash',
+                        contents=prompt,
+                    )
+                    
+                    st.write_stream(chunk.text for chunk in response_stream if chunk.text)
+                    break
+                    
+                except Exception as e:
+                    if "503" in str(e) and attempt < max_retries - 1:
+                        time.sleep(2)
+                        continue 
+                    else:
+                        #st.error(f"API Error: {e}")
+                        st.warning("The AI server is extremely busy right now after multiple attempts. Quick tip: Stand up, stretch your back, and drink a glass of water!")
+                        break
+
