@@ -15,6 +15,18 @@ client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
 # Page setup
 st.set_page_config(page_title="8 Courses, 1 Platform", layout="wide")
+
+# --- SIDEBAR PORTFOLIO PROFILE ---
+with st.sidebar:
+    st.image("https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg", width=50)
+    st.image("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png", width=120)
+    st.markdown("### 👨‍💻 Created by")
+    st.markdown("**Rex Melvin Villaruel**") 
+    st.markdown("Software QA Automation Engineer")
+    st.markdown("---")
+    st.markdown("**Project:** 8 Courses, 1 Platform")
+    st.markdown("**Powered by:** Google Gemini 3.8 Flash")
+    
 st.title("8 Courses, 1 Platform: A Google AI Professional Portfolio")
 
 # Setup session state for clearing inputs
@@ -130,6 +142,8 @@ with tab2:
 
 # Uploading files
 
+    st.warning("🛡️ **Data Privacy Warning:** This is a portfolio project using a free-tier AI API. Please do not upload confidential or internal company documents. Use dummy or public files only.")
+    
     uploaded_files = st.file_uploader(
         "Upload data", 
         accept_multiple_files=True, 
@@ -185,5 +199,3 @@ with tab2:
                         st.error("We're experiencing high traffic with the AI server right now. Please try again in a few moments.")
         else:
                 st.warning("Please enter a question first.")
-
-    

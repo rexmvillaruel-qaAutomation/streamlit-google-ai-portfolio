@@ -1,0 +1,15 @@
+[theme]
+# Ang kulay ng mga buttons, highlights, at loading bars (Gemini Purple/Google Blue mix)
+primaryColor = "#1A73E8"
+
+# Ang background color ng main website (Dark mode)
+backgroundColor = "#F8F9FA"
+
+# Ang background color ng sidebar at mga input boxes
+secondaryBackgroundColor = "#F1F3F4"
+
+# Ang kulay ng text
+textColor = "#202124"
+
+# Font style
+font = "sans serif"
