@@ -17,26 +17,83 @@ client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 # Page setup
 st.set_page_config(page_title="8 Courses, 1 Platform", layout="wide")
 
-# --- SIDEBAR PORTFOLIO PROFILE ---
+# --- IMPROVED SIDEBAR DESIGN (FIXED) ---
 with st.sidebar:
-    st.image("https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg", width=50)
-    st.image("https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png", width=120)
-    st.markdown("**Project:** 8 Courses, 1 Platform")
-    st.markdown("**Powered by:** Google Gemini 3.8 Flash")
-    st.markdown("---")
-    st.markdown("### 👨‍💻 Created by")
-    st.markdown("**Rex Melvin Villaruel**") 
-    st.markdown("Software QA Automation Engineer")
-    
-    
-#st.title("8 Courses, 1 Platform: A Google AI Professional Portfolio")
-# --- MAIN PAGE TITLE NA MAY GOOGLE COLORS ---
+    # 1. Google Gemini Banner (Gumamit ng emoji para stable)
+    st.markdown("""
+<div style='text-align: center; margin-bottom: 25px; margin-top: 10px;'>
+    <div style='font-size: 30px; margin-bottom: 5px;'>✨</div>
+    <span style='font-family: Google Sans, Arial, sans-serif; font-size: 24px; font-weight: 500; color: #1F1F1F;'>
+        <span style='color: #4285F4;'>G</span><span style='color: #EA4335;'>o</span><span style='color: #FBBC05;'>o</span><span style='color: #4285F4;'>g</span><span style='color: #34A853;'>l</span><span style='color: #EA4335;'>e</span> 
+        <span style='color: #1A73E8; font-weight: 600;'>Gemini</span>
+    </span>
+</div>
+""", unsafe_allow_html=True)
+
+    # 2. Project Details (Inalis ang indentations sa loob ng quotes)
+    st.markdown("""
+<div style='padding: 10px 0; border-bottom: 1px solid #E0E0E0; margin-bottom: 20px;'>
+<p style='font-size: 0.85rem; color: #5F6368; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;'>Project</p>
+<h4 style='font-size: 1.15rem; color: #1F1F1F; font-weight: 600; margin-top: 0; margin-bottom: 12px;'>8 Courses, 1 Platform</h4>
+<p style='font-size: 0.85rem; color: #5F6368; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px;'>Powered by</p>
+<h5 style='font-size: 1rem; color: #1A73E8; font-weight: 500; margin-top: 0;'>Google Gemini 3.8 Flash</h5>
+</div>
+""", unsafe_allow_html=True)
+
+    # 3. Personal Creator Badge
+    st.markdown("""
+<div style='padding-top: 10px;'>
+<p style='font-size: 0.85rem; color: #5F6368; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;'>
+    <span>🧑‍💻</span> Created by
+</p>
+<h4 style='font-size: 1.2rem; color: #1F1F1F; font-weight: 600; margin-bottom: 2px;'>Rex Melvin Villaruel</h4>
+<p style='font-size: 0.85rem; color: #5F6368; font-weight: 400; margin-top: 0;'>Software QA Automation Engineer</p>
+</div>
+""", unsafe_allow_html=True)
+
+# --- SUBTLE BACKGROUND GRADIENT ---
 st.markdown("""
-<h1 style='text-align: center; font-weight: bold;'>
+<style>
+    /* Pinapalitan ang main background ng napakanipis na white-to-light-gray gradient */
+    .stApp {
+        background: linear-gradient(to bottom right, #FFFFFF, #F8F9FA, #F1F3F4) !important;
+    }
+</style>
+""", unsafe_allow_html=True)  
+
+# --- MAIN PAGE TITLE NA MAY GOOGLE COLORS (CLEAN & STABLE) ---
+st.markdown("""
+<h1 style='text-align: center; font-weight: bold; margin-bottom: 20px;'>
     8 Courses, 1 Platform:<br> 
     A <span style='color: #4285F4;'>G</span><span style='color: #EA4335;'>o</span><span style='color: #FBBC05;'>o</span><span style='color: #4285F4;'>g</span><span style='color: #34A853;'>l</span><span style='color: #EA4335;'>e</span> AI Professional Portfolio
 </h1>
-<hr>
+""", unsafe_allow_html=True)
+
+# --- CUSTOM CSS: TAB ALIGNMENT & TYPOGRAPHY ---
+st.markdown("""
+<style>
+    .stTabs [data-baseweb="tab-list"] {
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    .stTabs [data-baseweb="tab"] {
+        flex: 1 !important;
+        justify-content: center !important;
+    }
+    .stTabs [data-baseweb="tab"] * {
+        font-weight: 500 !important;
+        color: #5F6368 !important;
+        font-size: 16px !important;
+    }
+    .stTabs [aria-selected="true"] * {
+        font-weight: 800 !important;
+        color: #1A73E8 !important;
+    }
+    .stTabs [data-baseweb="tab-highlight"] {
+        background-color: #1A73E8 !important;
+    }
+</style>
 """, unsafe_allow_html=True)
 
 # Setup session state for clearing inputs
@@ -45,6 +102,74 @@ if "reset_key" not in st.session_state:
 
 if "reset_key_tab1" not in st.session_state:
     st.session_state.reset_key_tab1 = 0
+
+# --- QUICK START GUIDE (COLLAPSIBLE) ---
+with st.expander("📖 Quick Start Guide: How to use this platform", expanded=False):
+    st.markdown("""
+    <div style='font-size: 0.9rem; color: #444;'>
+        <b>Welcome to my AI Professional Portfolio!</b> Here is how you can explore the features:
+        <ul style='margin-top: 10px; margin-bottom: 0;'>
+            <li style='margin-bottom: 5px;'><b>Tab 1 (Task Organizer):</b> Enter your tasks and let the AI schedule them into 4 optimal working chunks.</li>
+            <li style='margin-bottom: 5px;'><b>Tab 2 (Multi-Format RAG):</b> Upload dummy PDFs, Word, or Excel files, and ask the AI questions based <i>only</i> on those documents.</li>
+            <li style='margin-bottom: 5px;'><b>Tab 3 (Wellness Guardrails):</b> Adjust the sliders and select any specific physical or mental strain you are experiencing to generate a quick AI recovery routine.</li>
+            <li><b>Tab 4 (Routine Analytics):</b> Move the hours sliders to simulate a workday and watch the dashboard metrics update in real-time.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    st.write("") # Spacer
+
+st.markdown("""
+<style>
+    /* 1. Igitna ang buong listahan ng tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+    
+    /* 2. Pantayin ang lapad ng mga tab buttons */
+    .stTabs [data-baseweb="tab"] {
+        flex: 1 !important;
+        justify-content: center !important;
+    }
+
+    /* 3. Wildcard (*): Targetin lahat ng text sa loob ng INACTIVE tab (Medium bold, Gray) */
+    .stTabs [data-baseweb="tab"] * {
+        font-weight: 500 !important;
+        color: #5F6368 !important;
+        font-size: 16px !important;
+    }
+
+    /* 4. Wildcard (*): Targetin lahat ng text sa loob ng ACTIVE tab (Max bold, Google Blue) */
+    .stTabs [aria-selected="true"] * {
+        font-weight: 800 !important;
+        color: #1A73E8 !important;
+    }
+    
+    /* 5. Kulayan din ng blue yung linya sa ilalim ng active tab */
+    .stTabs [data-baseweb="tab-highlight"] {
+        background-color: #1A73E8 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# --- CUSTOM CSS: THE NUCLEAR OPTION ---
+st.markdown("""
+<style>
+    /* Pinipilit isentro ang mismong container ng tabs */
+    div[role="tablist"] {
+        justify-content: center !important;
+    }
+    
+    /* Pinipilit ang bawat tab na mag-stretch at pumantay */
+    button[role="tab"] {
+        flex: 1 !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 
 # Create 4 Tabs for the 4 modules
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -56,7 +181,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
 
 # Phase 1: Tab 1 Development
 with tab1:
-    st.header("The 4-Chunk Task Organizer")
+    st.subheader("The 4-Chunk Task Organizer")
     st.write("Dump all your tasks for today, and the AI will organize them into 4 time blocks to help prevent burnout.")
     
 # Bagong Clear Button para sa Tab 1
@@ -142,7 +267,7 @@ def extract_text(file):
     return extracted_text
 
 with tab2:
-    st.header("Smart Context Q&A")
+    st.subheader("Smart Context Q&A")
     st.write("Upload your documents (PDF, Word, Excel, PPT) and ask the AI questions about them.")
 
 # Reset user input
@@ -214,7 +339,7 @@ with tab2:
 
 # Phase 4: Tab 3 - Wellness Guardrails
 with tab3:
-    st.header("🧘‍♂️ Wellness Guardrails")
+    st.subheader("Wellness Guardrails")
     st.write("AI-powered burnout prevention and work-life balance advice tailored for working professionals.")
     st.divider()
 
@@ -268,7 +393,7 @@ with tab3:
 
 # Phase 5: Tab 4 - Routine Analytics (Interactive)
 with tab4:
-    st.header("📊 Routine Analytics")
+    st.subheader("📊 Routine Analytics")
     st.write("Adjust the sliders to simulate your hours today and see how it impacts your weekly productivity trends in real-time.")
     st.divider()
 
