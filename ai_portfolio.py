@@ -29,7 +29,15 @@ with st.sidebar:
     st.markdown("Software QA Automation Engineer")
     
     
-st.title("8 Courses, 1 Platform: A Google AI Professional Portfolio")
+#st.title("8 Courses, 1 Platform: A Google AI Professional Portfolio")
+# --- MAIN PAGE TITLE NA MAY GOOGLE COLORS ---
+st.markdown("""
+<h1 style='text-align: center; font-weight: bold;'>
+    8 Courses, 1 Platform:<br> 
+    A <span style='color: #4285F4;'>G</span><span style='color: #EA4335;'>o</span><span style='color: #FBBC05;'>o</span><span style='color: #4285F4;'>g</span><span style='color: #34A853;'>l</span><span style='color: #EA4335;'>e</span> AI Professional Portfolio
+</h1>
+<hr>
+""", unsafe_allow_html=True)
 
 # Setup session state for clearing inputs
 if "reset_key" not in st.session_state:
