@@ -266,3 +266,68 @@ with tab3:
                         st.warning("The AI server is extremely busy right now after multiple attempts. Quick tip: Stand up, stretch your back, and drink a glass of water!")
                         break
 
+# Phase 5: Tab 4 - Routine Analytics (Interactive)
+with tab4:
+    st.header("📊 Routine Analytics")
+    st.write("Adjust the sliders to simulate your hours today and see how it impacts your weekly productivity trends in real-time.")
+    st.divider()
+
+    # --- INTERACTIVE SLIDERS ---
+    st.markdown("### 🎛️ Log Today's Hours")
+    col_in1, col_in2, col_in3 = st.columns(3)
+    with col_in1:
+        today_deep = st.slider("Deep Work (hrs)", min_value=0, max_value=12, value=4)
+    with col_in2:
+        today_meet = st.slider("Meetings (hrs)", min_value=0, max_value=8, value=2)
+    with col_in3:
+        today_admin = st.slider("Admin/Emails (hrs)", min_value=0, max_value=6, value=2)
+
+    st.write("") # Spacer
+
+    # --- DYNAMIC CALCULATIONS ---
+    total_today = today_deep + today_meet + today_admin
+    # Computation para sa focus score: (Deep Work / Total Hours) * 100
+    focus_score = int((today_deep / total_today) * 100) if total_today > 0 else 0
+    target_score = 60 # Target focus percentage
+    delta_score = focus_score - target_score
+
+    # --- TOP METRICS ---
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric(label="Today's Deep Work", value=f"{today_deep} hrs")
+    with col2:
+        st.metric(label="Total Hours Logged", value=f"{total_today} hrs")
+    with col3:
+        st.metric(label="Daily Focus Score", value=f"{focus_score}%", delta=f"{delta_score}% vs Target")
+
+    st.write("") # Spacer
+
+    # --- BAR CHART: DYNAMIC TIME ALLOCATION ---
+    st.markdown("### 📅 Weekly Time Allocation")
+    st.caption("Real-time breakdown of your time. Notice how the 'Today' column updates as you move the sliders.")
+    
+    # Gumagamit tayo ng dynamic variables (today_deep, today_meet, today_admin) imbes na hardcoded numbers
+    time_data = pd.DataFrame(
+        {
+            "Deep Work (Focus)": [4, 5, 3, 6, today_deep],
+            "Meetings (Collab)": [3, 2, 4, 1, today_meet],
+            "Admin (Emails/Routines)": [1, 1, 1, 1, today_admin]
+        },
+        index=["Mon", "Tue", "Wed", "Thu", "Today"]
+    )
+    st.bar_chart(time_data)
+
+    # --- LINE CHART: DYNAMIC ENERGY LEVELS ---
+    st.markdown("### ⚡ Daily Energy & Focus Trends")
+    
+    # Dynamic logic: Bumababa ang energy kapag maraming meeting/admin, tumataas kapag deep work
+    dynamic_energy = max(10, 100 - (today_meet * 8) - (today_admin * 5) + (today_deep * 2))
+    if dynamic_energy > 100: dynamic_energy = 100
+
+    energy_data = pd.DataFrame(
+        {
+            "Energy Level (%)": [75, 90, 65, 85, dynamic_energy]
+        },
+        index=["Mon", "Tue", "Wed", "Thu", "Today"]
+    )
+    st.line_chart(energy_data)
