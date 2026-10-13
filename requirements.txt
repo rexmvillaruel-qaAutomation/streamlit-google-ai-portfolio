@@ -3,3 +3,6 @@ google-genai
 pandas
 pypdf
 python-dotenv
+python-docx
+openpyxl
+python-pptx
